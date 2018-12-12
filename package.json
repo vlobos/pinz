@@ -1,12 +1,45 @@
 {
   "name": "pinz",
   "version": "1.0.0",
-  "description": "",
+  "description": "10 pin bowling game!",
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js"
+    "build": "webpack --mode production",
+    "start": "webpack-dev-server --mode development",
+    "start:node": "node server.js"
   },
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vlobos/pinz.git"
+  },
+  "bugs": {
+    "url": "https://github.com/vlobos/pinz/issues"
+  },
+  "homepage": "https://github.com/vlobos/pinz#readme",
+  "devDependencies": {
+    "@babel/cli": "^7.2.0",
+    "@babel/core": "^7.2.0",
+    "@babel/preset-env": "^7.2.0",
+    "@babel/preset-react": "^7.0.0",
+    "babel-core": "^6.26.3",
+    "babel-loader": "^8.0.4",
+    "babel-plugin-transform-class-properties": "^6.24.1",
+    "babel-preset-env": "^1.7.0",
+    "babel-preset-react": "^6.24.1",
+    "react": "^16.6.3",
+    "react-dom": "^16.6.3",
+    "webpack": "^4.27.1",
+    "webpack-cli": "^3.1.2",
+    "webpack-dev-server": "^3.1.10"
+  },
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "css-loader": "^2.0.0",
+    "express": "^4.16.4",
+    "normalize.css": "^8.0.1",
+    "style-loader": "^0.23.1"
+  }
 }
