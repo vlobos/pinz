@@ -5,20 +5,20 @@ class Scoreboard extends React.Component {
   constructor(){
     super();
     this.state = {
-      frames: [1,2,3,4,5,6,7,8,10]
+      frames: [1,2,3,4,5,6,7,8,9,10]
     }
   }
 
   render() {
     return (
-      <div id="score__board">
+      <section id="score__container">
       <h3>Scoreboard</h3>
-      <div>
+      <div id="score__board">
         {this.state.frames.map((frame, index)=>{
-          return <Frame className="score__frame" id={"frame__"+frame} key={index} frameNum={frame}/>
+          return <Frame index={index} frameNum={frame}/>
         })}
       </div>
-      </div>
+      </section>
     )
   }
 }
