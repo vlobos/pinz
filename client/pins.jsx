@@ -5,8 +5,8 @@ class Pins extends React.Component{
     super(props)
   }
   render(){
-
-    let pinNums = [0,1,2,3,4,5,6,7,8,9,10]
+    let pinNums = this.props.pinsAvailable
+    //let pinNums = [0,1,2,3,4,5,6,7,8,9,10]
     return (
       <section id="pins__container">
         <div>Knock em down!</div>

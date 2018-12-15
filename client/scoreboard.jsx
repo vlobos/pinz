@@ -16,7 +16,6 @@ class Scoreboard extends React.Component {
           //if the score exists at index, return Frame with that score
           let rollScore = [];
           if(this.props.rollScore[index]){
-            console.log("sb props:  ", this.props.rollScore[index], "index: ", index)
             rollScore = this.props.rollScore[index];
             return <Frame key={index} frameNum={frame} rollScore={rollScore} currFrame={this.props.currFrame}/>
           }else if(!this.props.rollScore[index]){

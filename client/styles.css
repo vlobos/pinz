@@ -6,7 +6,7 @@ html, body {
   overflow-y: hidden;
   text-align: center;
   cursor: default;
-  color: #000000
+  color: #000000;
 }
 
 body {
@@ -88,11 +88,12 @@ header{
 }
 
 .pins__btn{
-  height: 30px;
+  height: 90px;
   width: 30px;
   border-radius: 50px;
   text-align: center;
   margin: 5px;
+  color: red
 }
 
 .pins__btn:focus {
