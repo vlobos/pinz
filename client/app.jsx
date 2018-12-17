@@ -212,6 +212,12 @@ class App extends React.Component{
         };
       }else{
         frameScore.push(frameScore[frameScore.length-1]+ prevFirstRoll+currentFirstRoll+pin);
+        if(currentFirstRoll+currentSecondRoll!=10){
+          frameScore.push(frameScore[frameScore.length-1]+currentFirstRoll+pin);
+          this.setState({
+            endGame: true
+          })
+        }
       };
     } else if (roll===2){
       if(this.state.currFrame!=10){
@@ -226,10 +232,10 @@ class App extends React.Component{
       if(pin===10){
         frameScore.push(frameScore[frameScore.length-1]+pin+currentFirstRoll+currentSecondRoll);
       }
-        frameScore.push(frameScore[frameScore.length-1]+pin+currentFirstRoll+currentSecondRoll);
-        this.setState({
-          endGame: true
-        })
+      frameScore.push(frameScore[frameScore.length-1]+pin+currentFirstRoll+currentSecondRoll);
+      this.setState({
+        endGame: true
+      });
     };
 
     if(roll===1){
