@@ -99,8 +99,6 @@ class App extends React.Component{
               strike: false,
             })
           }else if (roll>=2){
-            //TODO: handle the spare!
-            //handle regular play
             if(this.state.strike){
               this.saveRollScore(pin,roll)
               roll++;
@@ -109,12 +107,23 @@ class App extends React.Component{
                 strike: false
               })
             }else{
-              this.saveRollScore(pin,roll)
-              roll--;
-              this.setState({
-                rollCount: roll,
-                strike: false,
-              })
+              this.saveRollScore(pin,roll);
+              //handle spare
+              let lastRolls = this.state.rollScore[this.state.rollScore.length-1]
+              if(lastRolls[0]+lastRolls[1]===10){
+                roll++;
+                this.setState({
+                  rollCount: roll,
+                  strike: false,
+                  endGame: false
+                })
+              }else{
+                roll--;
+                this.setState({
+                  rollCount: roll,
+                  strike: false,
+                })
+              }
             }
           }
         }
@@ -152,22 +161,6 @@ class App extends React.Component{
       }
     }
   }
-
-  // handleSpecialPlay = (pin)=>{
-  //   let lastRoll = Number(this.state.rollScore[[this.state.rollScore.length-1][0]]);
-
-  //   if(pin===10){
-  //     this.setState({
-  //       strike: true,
-  //     })
-  //   };
-
-  //   if(pin + lastRoll ===10){
-  //     this.setState({
-  //       spare: true,
-  //     })
-  //   }
-  // }
 
   saveRollScore = (pin, roll) =>{
 
@@ -207,19 +200,46 @@ class App extends React.Component{
 
     if(currentFirstRoll+currentSecondRoll===10){
       console.log("SPARE! WOOOO!")
+      if(roll===2 && prevFirstRoll===10){
+        frameScore.push(previousFrameScore+10+currentFirstRoll+currentSecondRoll);
+      }
     }else if(pin===10){
-      console.log("STRIKE!!! YEAH!!!")
+      console.log("STRIKE!!! YEAH!!!");
     }else if(roll===2 && prevFirstRoll===10){
-        //calc score after strike
+      //calc score after strike
+      console.log("HERE")
+      if(this.state.currFrame!=10){
         frameScore.push(previousFrameScore+10+currentFirstRoll+currentSecondRoll);
         if(roll===2){
           frameScore.push(currentScore+10+pin+currentFirstRoll)
         }
-      } else if (roll===2){
-      frameScore.push(currentScore);
+      }else{
+        console.log("Keep going!");
+        console.log(frameScore, prevFirstRoll, currentFirstRoll, pin);
+        frameScore.push(frameScore[frameScore.length-1]+ prevFirstRoll+currentFirstRoll+pin);
+      }
+    } else if (roll===2){
+      if(this.state.currFrame!=10){
+        frameScore.push(currentScore);
+      }else{
+        frameScore.push(currentScore);
+      }
     }
 
-    //10, 10, 10
+
+    if (roll===3){
+      console.log("Roll", roll)
+      if(pin===10){
+        console.log("what")
+        frameScore.push(frameScore[frameScore.length-1]+pin+currentFirstRoll+currentSecondRoll)
+      }
+        console.log("xxx")
+        console.log(frameScore[frameScore.length-1]+pin+currentFirstRoll+currentSecondRoll)
+        frameScore.push(frameScore[frameScore.length-1]+pin+currentFirstRoll+currentSecondRoll)
+      
+      console.log(frameScore)
+    }
+
     if(roll===1){
       let secondToLast= rollScore[rollScore.length-3] || 0;
       let initializingStrike = secondToLast[0] || 0;
@@ -232,8 +252,9 @@ class App extends React.Component{
           frameScore.push(frameScore[frameScore.length-1]+prevFirstRoll+initializingStrike+pin)
         }
       }
-    }
+    };
 
+    
     this.setState({
       frameScore: frameScore
     })
