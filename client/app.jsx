@@ -15,71 +15,114 @@ class App extends React.Component{
       rollCount: 1,
       strike: false,
       spare: false,
+      endGame: false
     }
   }
 
   handlePinSelection=(e)=>{
-    let pin= Number(e.target.textContent);
-    let currFrame = this.state.currFrame;
-    let roll = this.state.rollCount;
-
-    let pinsLeft = (10 - pin)+1;
-    let pinsAvailable = this.state.pinsAvailable.slice(0,pinsLeft);
-    if(roll===2 || pin===10){
-      this.setState({
-        pinsAvailable: [0,1,2,3,4,5,6,7,8,9,10]
-      })
-    }else{
-      this.setState({
-        pinsAvailable: pinsAvailable
-      })
+    if(!this.state.endGame){
+      let pin= Number(e.target.textContent);
+      let currFrame = this.state.currFrame;
+      let roll = this.state.rollCount;
+      let pinsLeft = (10 - pin)+1;
+      let pinsAvailable = this.state.pinsAvailable.slice(0,pinsLeft);
+      if(currFrame===10){
+        if(roll==1){
+          if(pin===10){
+            this.setState({
+              pinsAvailable: [0,1,2,3,4,5,6,7,8,9,10]
+            })
+          }else{
+            this.setState({
+              pinsAvailable: pinsAvailable
+            })
+          }
+        }
+        if(roll===2 && this.state.endGame===false){
+          if(pin===10){
+            this.setState({
+              pinsAvailable: [0,1,2,3,4,5,6,7,8,9,10]
+            })
+          }else{
+            if(this.state.strike===false){
+              this.setState({
+                pinsAvailable: [0,1,2,3,4,5,6,7,8,9,10],
+                endGame: true
+              })
+            }else{
+              this.setState({
+                pinsAvailable: pinsAvailable
+              })
+            }
+          }
+        }
+        if(roll===3){
+          this.setState({
+            pinsAvailable: [0,1,2,3,4,5,6,7,8,9,10],
+            endGame: true
+          })
+        }
+      }else{
+        if(roll===2 || pin===10){
+          this.setState({
+            pinsAvailable: [0,1,2,3,4,5,6,7,8,9,10]
+          })
+        }else{
+          this.setState({
+            pinsAvailable: pinsAvailable
+          })
+        }
+      }
+      this.renderRollScore(pin,currFrame, roll);
     }
-    console.log("Pins left: ",pinsAvailable);
-
-
-    this.renderRollScore(pin,currFrame, roll);
   }
 
+//THIS WORKS DO NOT TOUCH
   renderRollScore = (pin, currFrame, roll) => {
     //handle 10th Frame
     if(currFrame===10){
       //if roll is one and you get a strike you want to get two more tries
         if(pin===10){
-          this.setState({
-            strike: true
-          })
-          this.saveScore(pin,roll);
+          this.saveRollScore(pin,roll);
           roll++;
           this.setState({
             currFrame: currFrame,
-            rollCount: roll
+            rollCount: roll,
+            strike: true
           })
         }else {
           if(roll===1){
-            this.saveScore(pin,roll)
+            this.saveRollScore(pin,roll)
             roll++;
             this.setState({
               rollCount: roll,
               strike: false,
             })
-          }else if (roll===2){
+          }else if (roll>=2){
             //TODO: handle the spare!
             //handle regular play
-            this.saveScore(pin,roll)
-            roll--;
-            currFrame++;
-            this.setState({
-              rollCount: roll,
-              currFrame: currFrame,
-              strike: false,
-            })
+            if(this.state.strike){
+              this.saveRollScore(pin,roll)
+              roll++;
+              this.setState({
+                rollCount: roll,
+                strike: false
+              })
+            }else{
+              this.saveRollScore(pin,roll)
+              roll--;
+              this.setState({
+                rollCount: roll,
+                strike: false,
+              })
+            }
           }
         }
     //handle all other frames
     } else {
       //handle 2nd roll
       if(roll===2){
-        this.saveScore(pin,roll)
+        this.saveRollScore(pin,roll)
         roll--;
         currFrame++;
         this.setState({
@@ -91,7 +134,7 @@ class App extends React.Component{
       }else if(roll===1){
         //handle a STRIKE
         if(pin===10){
-          this.saveScore(pin,roll)
+          this.saveRollScore(pin,roll)
           currFrame++;
           this.setState({
             currFrame: currFrame,
@@ -99,7 +142,7 @@ class App extends React.Component{
           })
         }else{
           //handle regular play
-          this.saveScore(pin,roll)
+          this.saveRollScore(pin,roll)
           roll++;
           this.setState({
             rollCount: roll,
@@ -110,10 +153,26 @@ class App extends React.Component{
     }
   }
 
-  saveScore = (pin, roll) =>{
+  // handleSpecialPlay = (pin)=>{
+  //   let lastRoll = Number(this.state.rollScore[[this.state.rollScore.length-1][0]]);
+
+  //   if(pin===10){
+  //     this.setState({
+  //       strike: true,
+  //     })
+  //   };
+
+  //   if(pin + lastRoll ===10){
+  //     this.setState({
+  //       spare: true,
+  //     })
+  //   }
+  // }
+
+  saveRollScore = (pin, roll) =>{
+
     //handle Strike
     let rollScore = this.state.rollScore;
-    
     //handle 1st roll
     if(roll===1){
       rollScore.push([pin]);
@@ -121,7 +180,6 @@ class App extends React.Component{
         rollScore: rollScore
       })
     }
-    
     //handle 2nd & 3rd roll
     if(roll===2 || roll===3){
       rollScore[rollScore.length-1].push(pin);
@@ -129,15 +187,65 @@ class App extends React.Component{
         rollScore: rollScore
       })
     }
+    this.calculateScore(pin,roll);
+  }
+
+  calculateScore=(pin, roll)=>{
+    let rollScore = this.state.rollScore;
+    let currentFirstRoll = Number(rollScore[rollScore.length-1][0]) || 0;
+    let currentSecondRoll = Number(rollScore[rollScore.length-1][1]);
+    let frameScore = this.state.frameScore;
+    let previousFrameScore = Number(frameScore[frameScore.length-1]) || 0;
+    let secondToLastFrameScore =Number(frameScore[frameScore.length-2]) || 0;
+    let currentScore = pin + currentFirstRoll + previousFrameScore;
+
+    let previousRollScores = rollScore[rollScore.length-2] || 0;
+    let prevFirstRoll = previousRollScores[0];
+    let prevSecondRoll  = previousRollScores[1];
+
+    let previousRollTotal = prevFirstRoll+prevSecondRoll;
+
+    if(currentFirstRoll+currentSecondRoll===10){
+      console.log("SPARE! WOOOO!")
+    }else if(pin===10){
+      console.log("STRIKE!!! YEAH!!!")
+    }else if(roll===2 && prevFirstRoll===10){
+        //calc score after strike
+        frameScore.push(previousFrameScore+10+currentFirstRoll+currentSecondRoll);
+        if(roll===2){
+          frameScore.push(currentScore+10+pin+currentFirstRoll)
+        }
+      } else if (roll===2){
+      frameScore.push(currentScore);
+    }
+
+    //10, 10, 10
+    if(roll===1){
+      let secondToLast= rollScore[rollScore.length-3] || 0;
+      let initializingStrike = secondToLast[0] || 0;
+      if(previousRollTotal===10){
+        frameScore.push(previousFrameScore+ previousRollTotal + pin)
+      }else if(initializingStrike===10 && prevFirstRoll===10){
+        if(pin===10){
+          frameScore.push(currentScore+10);
+        }else{
+          frameScore.push(frameScore[frameScore.length-1]+prevFirstRoll+initializingStrike+pin)
+        }
+      }
+    }
+
+    this.setState({
+      frameScore: frameScore
+    })
   }
 
   render(){
     return (
       <React.Fragment>
-        <Scoreboard rollScore={this.state.rollScore} currFrame={this.state.currFrame}/>
+        {this.state.endGame && <div>GAME OVER!</div>}
+        <Scoreboard frameScore={this.state.frameScore} rollScore={this.state.rollScore} currFrame={this.state.currFrame}/>
         <Pins handlePinSelection={this.handlePinSelection} pinsAvailable={this.state.pinsAvailable}/>
       </React.Fragment>
-
     )
   }
 }
