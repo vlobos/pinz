@@ -189,7 +189,6 @@ class App extends React.Component{
     let currentSecondRoll = Number(rollScore[rollScore.length-1][1]);
     let frameScore = this.state.frameScore;
     let previousFrameScore = Number(frameScore[frameScore.length-1]) || 0;
-    let secondToLastFrameScore =Number(frameScore[frameScore.length-2]) || 0;
     let currentScore = pin + currentFirstRoll + previousFrameScore;
 
     let previousRollScores = rollScore[rollScore.length-2] || 0;
@@ -202,43 +201,36 @@ class App extends React.Component{
       console.log("SPARE! WOOOO!")
       if(roll===2 && prevFirstRoll===10){
         frameScore.push(previousFrameScore+10+currentFirstRoll+currentSecondRoll);
-      }
+      };
     }else if(pin===10){
       console.log("STRIKE!!! YEAH!!!");
     }else if(roll===2 && prevFirstRoll===10){
-      //calc score after strike
-      console.log("HERE")
       if(this.state.currFrame!=10){
         frameScore.push(previousFrameScore+10+currentFirstRoll+currentSecondRoll);
         if(roll===2){
           frameScore.push(currentScore+10+pin+currentFirstRoll)
-        }
+        };
       }else{
-        console.log("Keep going!");
-        console.log(frameScore, prevFirstRoll, currentFirstRoll, pin);
         frameScore.push(frameScore[frameScore.length-1]+ prevFirstRoll+currentFirstRoll+pin);
-      }
+      };
     } else if (roll===2){
       if(this.state.currFrame!=10){
         frameScore.push(currentScore);
       }else{
         frameScore.push(currentScore);
-      }
-    }
+      };
+    };
 
 
     if (roll===3){
-      console.log("Roll", roll)
       if(pin===10){
-        console.log("what")
-        frameScore.push(frameScore[frameScore.length-1]+pin+currentFirstRoll+currentSecondRoll)
+        frameScore.push(frameScore[frameScore.length-1]+pin+currentFirstRoll+currentSecondRoll);
       }
-        console.log("xxx")
-        console.log(frameScore[frameScore.length-1]+pin+currentFirstRoll+currentSecondRoll)
-        frameScore.push(frameScore[frameScore.length-1]+pin+currentFirstRoll+currentSecondRoll)
-      
-      console.log(frameScore)
-    }
+        frameScore.push(frameScore[frameScore.length-1]+pin+currentFirstRoll+currentSecondRoll);
+        this.setState({
+          endGame: true
+        })
+    };
 
     if(roll===1){
       let secondToLast= rollScore[rollScore.length-3] || 0;
@@ -249,16 +241,15 @@ class App extends React.Component{
         if(pin===10){
           frameScore.push(currentScore+10);
         }else{
-          frameScore.push(frameScore[frameScore.length-1]+prevFirstRoll+initializingStrike+pin)
+          frameScore.push(frameScore[frameScore.length-1]+prevFirstRoll+initializingStrike+pin);
         }
       }
     };
 
-    
     this.setState({
       frameScore: frameScore
     })
-  }
+  };
 
   render(){
     return (
