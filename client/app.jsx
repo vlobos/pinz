@@ -77,7 +77,6 @@ class App extends React.Component{
     }
   }
 
-//THIS WORKS DO NOT TOUCH
   renderRollScore = (pin, currFrame, roll) => {
     //handle 10th Frame
     if(currFrame===10){
