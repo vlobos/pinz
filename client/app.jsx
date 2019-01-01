@@ -1,7 +1,6 @@
 import React from "react";
 import Pins from "./pins.jsx";
 import Scoreboard from "./scoreboard.jsx";
-import "./styles.css"
 
 class App extends React.Component{
 
@@ -259,7 +258,7 @@ class App extends React.Component{
   render(){
     return (
       <React.Fragment>
-        {this.state.endGame && <div>GAME OVER!</div>}
+        {this.state.endGame && <div id="alert">GAME OVER!</div>}
         <Scoreboard frameScore={this.state.frameScore} rollScore={this.state.rollScore} currFrame={this.state.currFrame}/>
         <Pins handlePinSelection={this.handlePinSelection} pinsAvailable={this.state.pinsAvailable}/>
       </React.Fragment>
