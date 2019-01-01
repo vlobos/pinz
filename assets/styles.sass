@@ -1,0 +1,113 @@
+$title: 'Unica One', cursive
+$scoreboard-font: Verdana, Geneva, Tahoma, sans-serif
+$accent: #e16b5d
+$background: #fcf7e1
+$scoreboard-color: #7c766a
+  
+html, body 
+  height: 100%
+  margin: auto
+  overscroll-behavior: none
+  overflow-y: hidden
+  font-family: $scoreboard-font
+  color: $scoreboard-color
+  text-align: center
+  cursor: default
+  background: $background
+
+body 
+  padding: 0 20px
+
+header
+  font-family: $title
+  font-size: 70px
+  color: $accent
+
+h1 
+  margin: 10px
+
+#alert
+  color: $accent
+  font-size: 30px
+
+#root
+  margin:50px auto
+  display: flex
+  flex-direction: column
+  align-items: center
+
+#score__container 
+  margin:50px auto
+
+h3
+  font-weight: 100
+  margin: 0
+  background: $scoreboard-color
+  color: $background
+  padding: 10px
+
+#score__board
+  width: 800px
+  font-family: $scoreboard-font
+  display: flex
+  flex-direction: row
+  height: 100%
+
+.frame
+  min-height: 116px
+  width: 85px
+  border: 1px solid $scoreboard-color
+  box-sizing: border-box
+
+.frame__num
+  border-bottom: 1px solid $scoreboard-color
+  margin: 10px 0 0 0
+  padding: 5px 0
+
+.frame__scores
+  display: grid
+  grid-template-columns: repeat(3, 1fr)
+  grid-template-rows: 1fr 1fr
+
+.roll
+  min-height: 37.78px
+  border-bottom: 1px solid $scoreboard-color
+  border-left: 1px solid $scoreboard-color
+  
+.tl_normal
+  grid-column: 2/3
+
+.tr_normal
+  grid-column: 3/4
+
+.tl_extra
+  grid-column: 1/2
+  border-left: none
+
+.tc_extra
+  grid-column: 2/3
+
+.tr_extra
+  grid-column: 3/4
+
+.score__total
+  grid-column: 1 /4
+  margin: 10px 0
+
+#pins__container
+  margin: 50px 0
+  font-family: $title
+  font-size: 20px
+
+.pins__btn
+  height: 30px
+  width: 30px
+  border-radius: 50px
+  font-size: 15px
+  border: 2px solid $accent
+  text-align: center
+  margin: 5px
+  color: black
+
+.pins__btn:focus 
+  outline: none
