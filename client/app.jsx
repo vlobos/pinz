@@ -1,6 +1,7 @@
 import React from "react";
 import Pins from "./pins.jsx";
 import Scoreboard from "./scoreboard.jsx";
+import axios from "axios";
 
 class App extends React.Component{
 
@@ -23,7 +24,7 @@ class App extends React.Component{
     let player = document.getElementById("player__input").value;
     document.getElementById("player__input").value = "";
     //get scoreboard scores
-    let scoresArray = [player]
+    let gameData = [player]
     for(let i=1; i<=10; i++){
       let rollOne = document.getElementById("roll__one__"+i).innerHTML;
       let rollTwo = document.getElementById("roll__two__"+i).innerHTML;
@@ -33,11 +34,35 @@ class App extends React.Component{
         rollThree = document.getElementById("roll__three__"+i).innerHTML;
       } 
       if(rollThree){
-        scoresArray.push([rollOne,rollTwo,rollThree,rollScore])
+        gameData.push([rollOne,rollTwo,rollThree,rollScore])
       } else {
-        scoresArray.push([rollOne,rollTwo,rollScore])
+        gameData.push([rollOne,rollTwo,rollScore])
       }
     }
+
+    this.postGame(gameData);
+  }
+
+  postGame=(gameData)=>{
+    axios.post("localhost:3000/scores",{
+      game: gameData
+    })
+    .then((res)=>{
+      console.log("Posted!",res)
+      this.setState({
+        pinsAvailable: [0,1,2,3,4,5,6,7,8,9,10],
+        rollScore: [],
+        frameScore: [],
+        currFrame: 1,
+        rollCount: 1,
+        strike: false,
+        spare: false,
+        endGame: false
+      })
+    })
+    .catch((err)=>{
+      if(eff) throw err;
+    })
   }
 
   handlePinSelection=(e)=>{
