@@ -18,6 +18,28 @@ class App extends React.Component{
     }
   }
 
+  getGameScores=()=>{
+    //get player game
+    let player = document.getElementById("player__input").value;
+    document.getElementById("player__input").value = "";
+    //get scoreboard scores
+    let scoresArray = [player]
+    for(let i=1; i<=10; i++){
+      let rollOne = document.getElementById("roll__one__"+i).innerHTML;
+      let rollTwo = document.getElementById("roll__two__"+i).innerHTML;
+      let rollScore = document.getElementById("score__"+i).innerHTML;
+      let rollThree;
+      if(i===10){
+        rollThree = document.getElementById("roll__three__"+i).innerHTML;
+      } 
+      if(rollThree){
+        scoresArray.push([rollOne,rollTwo,rollThree,rollScore])
+      } else {
+        scoresArray.push([rollOne,rollTwo,rollScore])
+      }
+    }
+  }
+
   handlePinSelection=(e)=>{
     if(!this.state.endGame){
       let pin= Number(e.target.textContent);
@@ -176,13 +198,12 @@ class App extends React.Component{
       rollScore[rollScore.length-1].push(pin);
       this.setState({
         rollScore: rollScore
-      })
+      });
     }
     this.calculateScore(pin,roll);
   }
 
   calculateScore=(pin, roll)=>{
-
     let rollScore = this.state.rollScore;
     let currentFirstRoll = Number(rollScore[rollScore.length-1][0]) || 0;
     let currentSecondRoll = Number(rollScore[rollScore.length-1][1]);
@@ -235,6 +256,7 @@ class App extends React.Component{
       this.setState({
         endGame: true
       });
+      console.log(this.state.endGame, "Is it over??")
     };
 
     if(roll===1){
@@ -259,16 +281,16 @@ class App extends React.Component{
   render(){
     return (
       <React.Fragment>
-        {this.state.endGame && 
-          <div>
-            <div id="alert">Player: 
-              <input></input>
-              <button>Save your game!</button>
-            </div>
-          </div>}
-        <Scoreboard frameScore={this.state.frameScore} rollScore={this.state.rollScore} currFrame={this.state.currFrame}/>
-        <Pins handlePinSelection={this.handlePinSelection} pinsAvailable={this.state.pinsAvailable}/>
-      </React.Fragment>
+      {this.state.endGame && 
+        <div>
+          <div id="alert">Player: 
+            <input id="player__input"></input>
+            <button onClick={this.getGameScores}>Save your game!</button>
+          </div>
+        </div>}
+      <Scoreboard frameScore={this.state.frameScore} rollScore={this.state.rollScore} currFrame={this.state.currFrame}/>
+      <Pins handlePinSelection={this.handlePinSelection} pinsAvailable={this.state.pinsAvailable}/>
+    </React.Fragment>
     )
   }
 }
