@@ -23,7 +23,9 @@ class App extends React.Component{
     //get player game
     let player = document.getElementById("player__input").value;
     document.getElementById("player__input").value = "";
+    
     //get scoreboard scores
+    let totalScore;
     let gameData = [player]
     for(let i=1; i<=10; i++){
       let rollOne = document.getElementById("roll__one__"+i).innerHTML;
@@ -31,20 +33,24 @@ class App extends React.Component{
       let rollScore = document.getElementById("score__"+i).innerHTML;
       let rollThree;
       if(i===10){
+        totalScore = rollScore
         rollThree = document.getElementById("roll__three__"+i).innerHTML;
       } 
       if(rollThree){
-        gameData.push([rollOne,rollTwo,rollThree,rollScore])
+        gameData.push(JSON.stringify([rollOne,rollTwo,rollThree,rollScore]))
       } else {
-        gameData.push([rollOne,rollTwo,rollScore])
+        gameData.push(JSON.stringify([rollOne,rollTwo,rollScore]))
       }
     }
+
+    gameData.push(totalScore);
 
     this.postGame(gameData);
   }
 
   postGame=(gameData)=>{
-    axios.post("localhost:3000/scores",{
+    console.log(gameData, "GAME DATA")
+    axios.post("/scores",{
       game: gameData
     })
     .then((res)=>{
@@ -61,7 +67,7 @@ class App extends React.Component{
       })
     })
     .catch((err)=>{
-      if(eff) throw err;
+      if(err) throw err;
     })
   }
 
