@@ -182,6 +182,7 @@ class App extends React.Component{
   }
 
   calculateScore=(pin, roll)=>{
+
     let rollScore = this.state.rollScore;
     let currentFirstRoll = Number(rollScore[rollScore.length-1][0]) || 0;
     let currentSecondRoll = Number(rollScore[rollScore.length-1][1]);
@@ -258,7 +259,13 @@ class App extends React.Component{
   render(){
     return (
       <React.Fragment>
-        {this.state.endGame && <div id="alert">GAME OVER!</div>}
+        {this.state.endGame && 
+          <div>
+            <div id="alert">Player: 
+              <input></input>
+              <button>Save your game!</button>
+            </div>
+          </div>}
         <Scoreboard frameScore={this.state.frameScore} rollScore={this.state.rollScore} currFrame={this.state.currFrame}/>
         <Pins handlePinSelection={this.handlePinSelection} pinsAvailable={this.state.pinsAvailable}/>
       </React.Fragment>
