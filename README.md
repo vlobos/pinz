@@ -1,2 +1,2 @@
 # pinz
-10 pin bowling game!
+A bowling game score calculator.
