@@ -1,6 +1,7 @@
 import React from "react";
 import Pins from "./pins.jsx";
 import Scoreboard from "./scoreboard.jsx";
+import PlayersScores from "./playersScores.jsx";
 import axios from "axios";
 
 class App extends React.Component{
@@ -16,7 +17,7 @@ class App extends React.Component{
       strike: false,
       spare: false,
       endGame: false,
-      scores: []
+      scores: [{id:5, player: "SURY", score: 150}]
     }
   }
 
@@ -27,9 +28,10 @@ class App extends React.Component{
   getScores=()=>{
     axios.get("/scores")
     .then((results)=>{
-      console.log("Existing: ", results)
+      console.log("Existing: ", results.data)
+      let scores = results.data
       this.setState({
-        scores: results
+        scores: scores
       })
     })
     .catch((err)=>{
@@ -325,6 +327,7 @@ class App extends React.Component{
   };
 
   render(){
+    console.log("APP : ",this.state.scores)
     return (
       <React.Fragment>
       {this.state.endGame && 
@@ -334,6 +337,7 @@ class App extends React.Component{
             <button onClick={this.getGameScores}>Save your game!</button>
           </div>
         </div>}
+      <PlayersScores pastScores={this.state.scores}/>
       <Scoreboard frameScore={this.state.frameScore} rollScore={this.state.rollScore} currFrame={this.state.currFrame}/>
       <Pins handlePinSelection={this.handlePinSelection} pinsAvailable={this.state.pinsAvailable}/>
     </React.Fragment>
