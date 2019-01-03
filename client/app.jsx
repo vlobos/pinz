@@ -17,6 +17,7 @@ class App extends React.Component{
       strike: false,
       spare: false,
       endGame: false,
+      emptyInput: false,
       scores: [{id:5, player: "SURY", score: 150}]
     }
   }
@@ -39,29 +40,38 @@ class App extends React.Component{
   }
 
   getGameScores=()=>{
-    //get player game
-    let player = document.getElementById("player__input").value;
-    document.getElementById("player__input").value = "";
-    //get scoreboard scores
-    let totalScore;
-    let gameData = [player]
-    for(let i=1; i<=10; i++){
-      let rollOne = document.getElementById("roll__one__"+i).innerHTML;
-      let rollTwo = document.getElementById("roll__two__"+i).innerHTML;
-      let rollScore = document.getElementById("score__"+i).innerHTML;
-      let rollThree;
-      if(i===10){
-        totalScore = rollScore
-        rollThree = document.getElementById("roll__three__"+i).innerHTML;
-      } 
-      if(rollThree){
-        gameData.push(JSON.stringify([rollOne,rollTwo,rollThree,rollScore]))
-      } else {
-        gameData.push(JSON.stringify([rollOne,rollTwo,rollScore]))
+    //check for empty input
+    let inputText = document.getElementById("player__input").value;
+    console.log("Value ",inputText)
+    if(inputText === ""){
+      this.setState({
+        emptyInput: true
+      })
+    }else{
+      //get player game
+      let player = document.getElementById("player__input").value;
+      document.getElementById("player__input").value = "";
+      //get scoreboard scores
+      let totalScore;
+      let gameData = [player]
+      for(let i=1; i<=10; i++){
+        let rollOne = document.getElementById("roll__one__"+i).innerHTML;
+        let rollTwo = document.getElementById("roll__two__"+i).innerHTML;
+        let rollScore = document.getElementById("score__"+i).innerHTML;
+        let rollThree;
+        if(i===10){
+          totalScore = rollScore
+          rollThree = document.getElementById("roll__three__"+i).innerHTML;
+        } 
+        if(rollThree){
+          gameData.push(JSON.stringify([rollOne,rollTwo,rollThree,rollScore]))
+        } else {
+          gameData.push(JSON.stringify([rollOne,rollTwo,rollScore]))
+        }
       }
+      gameData.push(totalScore);
+      this.postGame(gameData);
     }
-    gameData.push(totalScore);
-    this.postGame(gameData);
   }
 
   postGame=(gameData)=>{
@@ -77,6 +87,7 @@ class App extends React.Component{
         rollCount: 1,
         strike: false,
         spare: false,
+        emptyInput: false,
         endGame: false
       })
     })
@@ -328,14 +339,19 @@ class App extends React.Component{
       <React.Fragment>
         <header><h1>Pinz</h1></header>
         <PlayersScores pastScores={this.state.scores}/>
-        {this.state.endGame && 
-          <div id="alert">Player: 
-            <input id="player__input"></input>
-            <button onClick={this.getGameScores}>Save your game!</button>
-          </div>
-        }
-        <Scoreboard frameScore={this.state.frameScore} rollScore={this.state.rollScore} currFrame={this.state.currFrame}/>
-        <Pins handlePinSelection={this.handlePinSelection} pinsAvailable={this.state.pinsAvailable}/>
+        <div id="main__container">
+          {this.state.emptyInput &&
+            <div className="alert">OOPS! Please type a PLAYER name!</div>
+          }
+          {this.state.endGame && 
+            <div className="alert">PLAYER: 
+              <input id="player__input" autocomplete="off" type="text"></input>
+              <button onClick={this.getGameScores}>Save game!</button>
+            </div>
+          }
+          <Scoreboard frameScore={this.state.frameScore} rollScore={this.state.rollScore} currFrame={this.state.currFrame}/>
+          <Pins handlePinSelection={this.handlePinSelection} pinsAvailable={this.state.pinsAvailable}/>
+        </div>
       </React.Fragment>
     )
   }
