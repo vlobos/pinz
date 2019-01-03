@@ -28,7 +28,6 @@ class App extends React.Component{
   getScores=()=>{
     axios.get("/scores")
     .then((results)=>{
-      console.log("Existing: ", results.data)
       let scores = results.data
       this.setState({
         scores: scores
@@ -66,12 +65,10 @@ class App extends React.Component{
   }
 
   postGame=(gameData)=>{
-    console.log(gameData, "GAME DATA")
     axios.post("/scores",{
       game: gameData
     })
     .then((res)=>{
-      console.log("Posted!",res)
       this.setState({
         pinsAvailable: [0,1,2,3,4,5,6,7,8,9,10],
         rollScore: [],
@@ -327,7 +324,6 @@ class App extends React.Component{
   };
 
   render(){
-    console.log("APP : ",this.state.scores)
     return (
       <React.Fragment>
         <header><h1>Pinz</h1></header>

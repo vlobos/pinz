@@ -6,7 +6,6 @@ class PlayersScores extends React.Component{
   }
 
   render(){
-    console.log("PROPS : ",this.props)
     return(
       <React.Fragment>
         <div id="high__scores">
@@ -15,8 +14,8 @@ class PlayersScores extends React.Component{
             {this.props.pastScores.map((element, index)=>{
               return(
                 <li className="high__scores__li">
-                  <div>{element.player}</div>
-                  <div>{element.score}</div>
+                  <div className="high__scores__div">{element.player}</div>
+                  <div className="high__scores__div">{element.score}</div>
                 </li>
               )
             })}

@@ -2,7 +2,6 @@ const database = require("./config");
 
 module.exports = {
   get: (callback)=> {
-    console.log("Get Models Fired");
     let query = `SELECT id, player, score FROM games ORDER BY score desc`;
     database.query(query,(err,results)=>{
       if(err) throw err;

@@ -12,7 +12,6 @@ module.exports = {
     });
   },
   post: (req,res)=> {
-    console.log("Request: ",req.body.game);
     scoreModel.post(req.body.game, (err)=>{
       if(err){
         throw err;
