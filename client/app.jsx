@@ -15,15 +15,32 @@ class App extends React.Component{
       rollCount: 1,
       strike: false,
       spare: false,
-      endGame: false
+      endGame: false,
+      scores: []
     }
+  }
+
+  componentDidMount=()=>{
+    this.getScores();
+  }
+
+  getScores=()=>{
+    axios.get("/scores")
+    .then((results)=>{
+      console.log("Existing: ", results)
+      this.setState({
+        scores: results
+      })
+    })
+    .catch((err)=>{
+      if(err) throw err;
+    })
   }
 
   getGameScores=()=>{
     //get player game
     let player = document.getElementById("player__input").value;
     document.getElementById("player__input").value = "";
-    
     //get scoreboard scores
     let totalScore;
     let gameData = [player]
@@ -42,9 +59,7 @@ class App extends React.Component{
         gameData.push(JSON.stringify([rollOne,rollTwo,rollScore]))
       }
     }
-
     gameData.push(totalScore);
-
     this.postGame(gameData);
   }
 
