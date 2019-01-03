@@ -6,7 +6,6 @@ module.exports = {
       if(err) {
         throw errl
       }else{
-        console.log(results)
         res.send(results);
       }
     });
