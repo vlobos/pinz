@@ -30,7 +30,8 @@ body
 header
   font-family: $title
   font-size: 70px
-  color: $accent
+  background: $accent
+  color: $main-background
   grid-area: header
 
 h1 
@@ -45,7 +46,7 @@ h1
   grid-area: main
   display: flex
   flex-direction: column
-  margin:50px auto
+  margin: 25px auto 75px auto
 
 h3
   font-weight: 100
@@ -122,8 +123,11 @@ h3
   outline: none
 
 #high__scores
+  height: 350px
+  padding: 25px
   grid-area: scores
   background: $highScore-background
+  color: $main-background
 
 ul
   padding: 0
@@ -131,3 +135,7 @@ ul
 .high__scores__li
   display: flex
   flex-direction: row
+  justify-content: space-between
+
+  .high__scores__div 
+    margin: 5px 0 5px 0

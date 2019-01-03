@@ -26,7 +26,8 @@ body {
 header {
   font-family: "Unica One", cursive;
   font-size: 70px;
-  color: #e16b5d;
+  background: #e16b5d;
+  color: #fcf7e1;
   grid-area: header;
 }
 
@@ -44,7 +45,7 @@ h1 {
   grid-area: main;
   display: flex;
   flex-direction: column;
-  margin: 50px auto;
+  margin: 25px auto 75px auto;
 }
 
 h3 {
@@ -137,8 +138,11 @@ h3 {
 }
 
 #high__scores {
+  height: 350px;
+  padding: 25px;
   grid-area: scores;
   background: #90b29a;
+  color: #fcf7e1;
 }
 
 ul {
@@ -148,6 +152,10 @@ ul {
 .high__scores__li {
   display: flex;
   flex-direction: row;
+  justify-content: space-between;
+}
+.high__scores__li .high__scores__div {
+  margin: 5px 0 5px 0;
 }
 
 /*# sourceMappingURL=output.css.map */
