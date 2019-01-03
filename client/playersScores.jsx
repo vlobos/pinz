@@ -14,7 +14,7 @@ class PlayersScores extends React.Component{
           <ul className="high__scores__list">
             {this.props.pastScores.map((element, index)=>{
               return(
-                <li>
+                <li className="high__scores__li">
                   <div>{element.player}</div>
                   <div>{element.score}</div>
                 </li>
