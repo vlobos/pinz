@@ -330,17 +330,17 @@ class App extends React.Component{
     console.log("APP : ",this.state.scores)
     return (
       <React.Fragment>
-      {this.state.endGame && 
-        <div>
+        <header><h1>Pinz</h1></header>
+        <PlayersScores pastScores={this.state.scores}/>
+        {this.state.endGame && 
           <div id="alert">Player: 
             <input id="player__input"></input>
             <button onClick={this.getGameScores}>Save your game!</button>
           </div>
-        </div>}
-      <PlayersScores pastScores={this.state.scores}/>
-      <Scoreboard frameScore={this.state.frameScore} rollScore={this.state.rollScore} currFrame={this.state.currFrame}/>
-      <Pins handlePinSelection={this.handlePinSelection} pinsAvailable={this.state.pinsAvailable}/>
-    </React.Fragment>
+        }
+        <Scoreboard frameScore={this.state.frameScore} rollScore={this.state.rollScore} currFrame={this.state.currFrame}/>
+        <Pins handlePinSelection={this.handlePinSelection} pinsAvailable={this.state.pinsAvailable}/>
+      </React.Fragment>
     )
   }
 }
