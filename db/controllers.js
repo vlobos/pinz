@@ -2,8 +2,14 @@ const scoreModel =  require("./models");
 
 module.exports = {
   get: (req,res)=> {
-    res.send("Get Controllers");
-    scoreModel.get();
+    scoreModel.get((err,results)=>{
+      if(err) {
+        throw errl
+      }else{
+        console.log(results)
+        res.send(results);
+      }
+    });
   },
   post: (req,res)=> {
     console.log("Request: ",req.body.game);
