@@ -351,8 +351,8 @@ class App extends React.Component{
               <button onClick={this.getGameScores}>Save game!</button>
             </div>
           }
-          <Scoreboard frameScore={this.state.frameScore} rollScore={this.state.rollScore} currFrame={this.state.currFrame}/>
           <Pins handlePinSelection={this.handlePinSelection} pinsAvailable={this.state.pinsAvailable}/>
+          <Scoreboard frameScore={this.state.frameScore} rollScore={this.state.rollScore} currFrame={this.state.currFrame}/>
         </div>
       </React.Fragment>
     )
