@@ -42,7 +42,6 @@ class App extends React.Component{
   getGameScores=()=>{
     //check for empty input
     let inputText = document.getElementById("player__input").value;
-    console.log("Value ",inputText)
     if(inputText === ""){
       this.setState({
         emptyInput: true
@@ -90,6 +89,9 @@ class App extends React.Component{
         emptyInput: false,
         endGame: false
       })
+    })
+    .then(()=>{
+      this.getScores();
     })
     .catch((err)=>{
       if(err) throw err;
