@@ -10,7 +10,6 @@ class Scoreboard extends React.Component {
     let frames = [1,2,3,4,5,6,7,8,9,10]
     return (
       <section id="score__container">
-      <h3>SCOREBOARD</h3>
       <div id="score__board">
         {frames.map((frame, index)=>{
           let rollScore = [];
