@@ -14,10 +14,20 @@ body {
   padding: 0 20px;
 }
 
+#root {
+  margin: 50px auto;
+  display: grid;
+  grid-template-columns: auto 250px 850px auto;
+  grid-template-rows: auto;
+  grid-template-areas: ". header alert ." ". scores main ." ". scores pins .";
+  align-items: center;
+}
+
 header {
   font-family: "Unica One", cursive;
   font-size: 70px;
   color: #e16b5d;
+  grid-area: header;
 }
 
 h1 {
@@ -27,16 +37,13 @@ h1 {
 #alert {
   color: #e16b5d;
   font-size: 30px;
-}
-
-#root {
-  margin: 50px auto;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  grid-area: alert;
 }
 
 #score__container {
+  grid-area: main;
+  display: flex;
+  flex-direction: column;
   margin: 50px auto;
 }
 
@@ -108,6 +115,7 @@ h3 {
 }
 
 #pins__container {
+  grid-area: pins;
   margin: 50px 0;
   font-family: "Unica One", cursive;
   font-size: 20px;
@@ -126,6 +134,20 @@ h3 {
 
 .pins__btn:focus {
   outline: none;
+}
+
+#high__scores {
+  grid-area: scores;
+  background: #90b29a;
+}
+
+ul {
+  padding: 0;
+}
+
+.high__scores__li {
+  display: flex;
+  flex-direction: row;
 }
 
 /*# sourceMappingURL=output.css.map */
