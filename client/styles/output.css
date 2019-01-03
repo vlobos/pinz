@@ -78,13 +78,7 @@ button:focus {
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin: 25px auto 75px auto;
-}
-
-h3 {
-  font-weight: 100;
-  margin: 0;
-  padding: 10px;
+  margin: 25px auto 150px auto;
 }
 
 #score__board {
@@ -99,6 +93,7 @@ h3 {
   width: 85px;
   border: 1px solid #484848;
   box-sizing: border-box;
+  background: #e16b5d;
 }
 
 .frame__num {
@@ -159,17 +154,48 @@ h3 {
   font-size: 15px;
 }
 
+.high__scores__title {
+  font-weight: 600;
+}
+
 #high__scores {
   margin-top: 25px;
-  height: 350px;
-  padding: 25px;
+  height: 375px;
+  padding-top: 25px;
   grid-area: scores;
   background: #90b29a;
   color: #fcf7e1;
 }
 
+.high__scores__list {
+  overflow-y: scroll;
+  padding: 0 15px;
+  height: 326px;
+}
+
+/* width */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #90b29a;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #7c766a;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #e16b5d;
+}
+
 ul {
   padding: 0;
+  margin: 5px;
 }
 
 .high__scores__li {
